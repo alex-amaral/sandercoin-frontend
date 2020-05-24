@@ -1,13 +1,42 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { render } from 'react-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import history from './utils/history';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import {Provider} from 'react-redux';
+import store from './store'
+import Blocks from './components/Blocks';
+import './index.scss';
+import ConductTransaction from './components/ConductTransaction';
+import {createMuiTheme} from '@material-ui/core';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import TransactionPool from './components/TransactionPool';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#e66'
+    },
+    text: {
+      primary: '#fff'
+    }
+  }
+})
+
+render(
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <Router history={history}>
+        <Switch>
+          <Route exact path='/' component={App} />
+          <Route path='/blocks' component={Blocks} />
+          <Route path='/conduct-transaction' component={ConductTransaction} />
+          <Route path='/transaction-pool' component={TransactionPool} />
+        </Switch>
+      </Router>
+    </Provider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 
