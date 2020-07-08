@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Creators as BlockActions } from '../store/ducks/blocks';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import Block from './Block';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
+import Button from '@material-ui/core/Button';
 
 const Blocks = () => {
+  const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,23 +21,46 @@ const Blocks = () => {
 
   const { requesting, blocks, error } = useSelector(({ blocks }) => ({ ...blocks }));
 
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  if (requesting) return <CircularProgress />;
+
   return (
-    <>
-      <BlocksContainer>
-        {requesting
-          ? <div><CircularProgress /></div>
-          :blocks.map(({ data, hash, timestamp }) => {
-            return(
-              <Block key={hash} data={data} hash={hash} timestamp={timestamp} />
-            )
-        })}
-      </BlocksContainer>
-    </>
+    <Stepper activeStep={activeStep} orientation='vertical'>
+      {blocks.map(({ data, hash, timestamp }) => {
+        return(
+          <Step key={hash}>
+            <StepLabel>{hash}</StepLabel>
+            <StepContent>
+              <Block data={data} hash={hash} timestamp={timestamp} />
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                >
+                  Voltar
+                </Button>
+                {activeStep !== blocks.length - 1 &&
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                >
+                  Próximo
+                </Button>}
+              </div>
+            </StepContent>
+          </Step>
+        )
+      })}
+    </Stepper>
   )
 }
-
-const BlocksContainer = styled.div`
-  max-width: 500px;
-`
 
 export default Blocks;
