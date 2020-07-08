@@ -6,12 +6,9 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
 import store from './store'
-import Blocks from './components/Blocks';
 import './index.scss';
-import ConductTransaction from './components/ConductTransaction';
 import {createMuiTheme} from '@material-ui/core';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
-import TransactionPool from './components/TransactionPool';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,9 +27,6 @@ render(
       <Router history={history}>
         <Switch>
           <Route exact path='/' component={App} />
-          <Route path='/blocks' component={Blocks} />
-          <Route path='/conduct-transaction' component={ConductTransaction} />
-          <Route path='/transaction-pool' component={TransactionPool} />
         </Switch>
       </Router>
     </Provider>

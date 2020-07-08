@@ -7,12 +7,12 @@ const Transaction = ({ transaction }) => {
 
   return (
     <Container>
-      <div>From: {`${input.address.substring(0, 20)}...`} | Balance: {input.amount}</div>
+      <div>De: {`${input.address.substring(0, 20)}...`} | Saldo: {input.amount}</div>
       {
         recipients.map(recipient => {
           return (
             <div key={recipient}>
-              To: {`${recipient.substring(0, 20)}...`} | Sent: {outputMap[recipient]}
+              Para: {`${recipient.substring(0, 20)}...`} | Enviado: {outputMap[recipient]}
             </div>
           )
         })

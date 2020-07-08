@@ -31,21 +31,21 @@ const Block = ({ timestamp, hash, data }) => {
             variant='contained'
             color='primary'
             disableElevation
-            onClick={toggleDisplayTransaction}>Show Less</Button>
+            onClick={toggleDisplayTransaction}>Mostrar menos</Button>
         </div>
       )
     }
 
     return (
       <div>
-        <div>Data: {dataDisplay}</div>
+        <div>Dados: {dataDisplay}</div>
         <br/>
         <Button
           size='small'
           variant='contained'
           color='primary'
           disableElevation
-          onClick={toggleDisplayTransaction}>Show More</Button>
+          onClick={toggleDisplayTransaction}>Mostrar mais</Button>
       </div>
     )
   }

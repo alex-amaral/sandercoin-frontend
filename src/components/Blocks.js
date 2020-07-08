@@ -4,9 +4,7 @@ import { Creators as BlockActions } from '../store/ducks/blocks';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import Block from './Block';
-import {Link} from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Container from '@material-ui/core/Container';
 
 const Blocks = () => {
   const dispatch = useDispatch();
@@ -18,9 +16,7 @@ const Blocks = () => {
   const { requesting, blocks, error } = useSelector(({ blocks }) => ({ ...blocks }));
 
   return (
-    <Container align='center'>
-      <div><Link to='/'>Home</Link></div>
-      <h3>Blocks</h3>
+    <>
       <BlocksContainer>
         {requesting
           ? <div><CircularProgress /></div>
@@ -30,7 +26,7 @@ const Blocks = () => {
             )
         })}
       </BlocksContainer>
-    </Container>
+    </>
   )
 }
 

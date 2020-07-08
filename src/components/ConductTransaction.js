@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
-import { Container, FormGroup, Input, Button } from '@material-ui/core';
+import { FormGroup, Input, Button } from '@material-ui/core';
 import { Creators as TransactionActions } from '../store/ducks/transaction';
-import history from '../utils/history';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const ConductTransaction = (props) => {
+const ConductTransaction = ({ onSubmit }) => {
   const [recipient, setRecipient] = useInputText('');
   const [amount, setAmount] = useInputNumber();
   const dispatch = useDispatch();
@@ -16,43 +14,39 @@ const ConductTransaction = (props) => {
   const submit = async event => {
     event.preventDefault()
     dispatch(TransactionActions.createTransaction({ recipient, amount }))
-    history.push('/transaction-pool');
+    onSubmit()
   }
 
   return (
-    <Container align='center'>
-      <Link to='/'>Home</Link>
-      <h3>Conduct a Transaction</h3>
-      <Form>
-        <FormGroup>
-          <Input
-            placeholder='Recipient'
-            value={recipient}
-            onChange={setRecipient}
-            fullWidth
-          />
-        </FormGroup>
-        <br/>
-        <FormGroup>
-          <Input
-            placeholder='Amount'
-            type='number'
-            onChange={setAmount}
-            fullWidth
-          />
-        </FormGroup>
-        <br/>
-        <div>
-          {requesting
-          ? <CircularProgress />
-          :<Button
-              color='primary'
-              onClick={submit}>
-              Submit
-            </Button>}
-        </div>
-      </Form>
-    </Container>
+    <Form>
+      <FormGroup>
+        <Input
+          placeholder='Recipient'
+          value={recipient}
+          onChange={setRecipient}
+          fullWidth
+        />
+      </FormGroup>
+      <br/>
+      <FormGroup>
+        <Input
+          placeholder='Amount'
+          type='number'
+          onChange={setAmount}
+          fullWidth
+        />
+      </FormGroup>
+      <br/>
+      <div>
+        {requesting
+        ? <CircularProgress />
+        :<Button
+            color='primary'
+            onClick={submit}>
+            Submit
+          </Button>}
+      </div>
+    </Form>
   );
 };
 
