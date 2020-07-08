@@ -21,7 +21,7 @@ const ConductTransaction = ({ onSubmit }) => {
     <Form>
       <FormGroup>
         <Input
-          placeholder='Recipient'
+          placeholder='Endereço do recebedor'
           value={recipient}
           onChange={setRecipient}
           fullWidth
@@ -30,7 +30,7 @@ const ConductTransaction = ({ onSubmit }) => {
       <br/>
       <FormGroup>
         <Input
-          placeholder='Amount'
+          placeholder='Valor'
           type='number'
           onChange={setAmount}
           fullWidth
@@ -43,7 +43,7 @@ const ConductTransaction = ({ onSubmit }) => {
         :<Button
             color='primary'
             onClick={submit}>
-            Submit
+            Enviar
           </Button>}
       </div>
     </Form>
