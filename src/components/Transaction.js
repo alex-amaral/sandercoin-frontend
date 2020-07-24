@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Typography } from '@material-ui/core';
 
 const Transaction = ({ transaction }) => {
   const { input, outputMap } = transaction;
@@ -7,13 +8,16 @@ const Transaction = ({ transaction }) => {
 
   return (
     <Container>
-      <div>De: {`${input.address.substring(0, 20)}...`} | Saldo: {input.amount}</div>
+      {input.address !== '*authorized-reward*'
+       ? <Typography>De: {`${input.address.substring(0, 20)}...`} | Saldo: {input.amount}</Typography>
+       : <Typography>Recompensa</Typography>
+      }
       {
         recipients.map(recipient => {
           return (
-            <div key={recipient}>
+            <Typography key={recipient}>
               Para: {`${recipient.substring(0, 20)}...`} | Enviado: {outputMap[recipient]}
-            </div>
+            </Typography>
           )
         })
       }

@@ -1,20 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
+import QRCode from 'qrcode.react';
 import { Creators as WalletActions } from '../store/ducks/wallet';
 import icon from '../assets/icon.svg'
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Container from '@material-ui/core/Container';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import {CircularProgress, Typography, Container, AppBar, Tabs, Tab, Box, makeStyles} from '@material-ui/core';
 import TabPanel from './TabPanel';
 import Blocks from './Blocks';
 import ConductTransaction from './ConductTransaction';
 import TransactionPool from './TransactionPool';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color: '#fff'
+  },
+  address: {
+    maxWidth: '30%'
+  }
+}));
+
 const App = () => {
+  const classes = useStyles();
   const [selectedTab, setSelectedTab] = useState(0)
   const dispatch = useDispatch();
 
@@ -30,10 +36,8 @@ const App = () => {
     setSelectedTab(newValue);
   };
 
-  const addressDisplay = address ? `${address.substring(0, 15)}...` : address;
-
   return (
-    <div>
+    <div className={classes.root}>
       <AppBar position='static'>
         <Tabs
           variant='fullWidth'
@@ -60,8 +64,12 @@ const App = () => {
         {requesting
           ? <CircularProgress />
           : <Box p={3}>
-            <div><span>Carteira: {addressDisplay}</span></div>
-            <div><span>Saldo: ${balance}</span></div>
+            <AddressContainer>
+              <Typography>Minha carteira</Typography>
+              <br />
+              <QRCode value={address || ''} size={50} />
+            </AddressContainer>
+            <div><Typography>Saldo: {balance} SC</Typography></div>
           </Box>
         }
       </Container>
@@ -83,6 +91,13 @@ const App = () => {
 const Logo = styled.img`
   height: 250px;
   width: 250px;
+`
+
+const AddressContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
 `
 
 export default App;

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import CurrencyInput from 'react-currency-masked-input';
 import {useDispatch, useSelector} from 'react-redux';
 import { FormGroup, Input, Button } from '@material-ui/core';
 import { Creators as TransactionActions } from '../store/ducks/transaction';
@@ -33,7 +34,7 @@ const ConductTransaction = ({ onSubmit }) => {
           placeholder='Valor'
           type='number'
           onChange={setAmount}
-          fullWidth
+          inputComponent={CurrencyInput}
         />
       </FormGroup>
       <br/>
