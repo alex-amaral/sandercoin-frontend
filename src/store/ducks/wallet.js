@@ -23,14 +23,14 @@ export default function walletInfo(state = INITIAL_STATE, action) {
       return {
         ...state,
         requesting: false,
-        walletInfo: action.walletInfo,
+        wallet: action.wallet,
         error: null
       };
     case Types.ERROR:
       return {
         ...state,
         requesting: false,
-        walletInfo: null,
+        wallet: null,
         error: action.error
       };
     default:
@@ -54,6 +54,23 @@ export const Creators = {
         dispatch(failure(e))
       }
 
+    }
+  },
+  generateWallet: () => {
+    const request = () => ({ type: Types.REQUEST })
+    const success = (wallet) => ({ type: Types.SUCCESS, wallet })
+    const failure = (error) => ({ type: Types.ERROR, error })
+
+    return async (dispatch) => {
+      dispatch(request())
+
+      try {
+        const { data: wallet } = await api.get('generate-wallet')
+        dispatch(success(wallet))
+      } catch (e) {
+        console.log(e)
+        dispatch(failure(e))
+      }
     }
   }
 };
